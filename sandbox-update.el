@@ -102,6 +102,12 @@ LOCATION can be a path or a URL."
                        (buffer-string)))))
       (unless (file-exists-p cache-path)
         (make-directory cache-path t))
+
+      (let* (last-updated)
+	(with-temp-buffer
+	  (insert-file-contents last-update-file)
+	  (setq last-updated (buffer-string)))
+	(message "Last updated: %s" last-updated))
       (if (or (not (file-exists-p last-update-file))
               (time-less-p 
                (nth 5 (file-attributes last-update-file))
