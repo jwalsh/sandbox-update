@@ -1,4 +1,3 @@
-* sandbox-update
 #+TITLE: sandbox-update
 #+AUTHOR: Jason Walsh
 
