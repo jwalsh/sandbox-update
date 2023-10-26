@@ -1,0 +1,5 @@
+(ert-deftest add-repo ()
+  (should (equal (sandbox-update-repo-add "test") 
+                 '("test")))
+  (should (equal (sandbox-update-repo-add "another")
+                 '("test" "another"))))

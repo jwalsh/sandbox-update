@@ -1,0 +1,114 @@
+* sandbox-update
+#+TITLE: sandbox-update
+#+AUTHOR: Jason Walsh
+
+** Introduction
+
+~sandbox-update.el~ provides functions for managing and updating git repositories in a sandbox directory. It can track multiple repositories and update them on demand or on a scheduled basis.
+
+** Usage
+*** Add repositories
+Use sandbox-update-repo-add to register a repository for updates:
+
+#+begin_src elisp
+(sandbox-update-repo-add "/path/to/local/repo")
+(sandbox-update-repo-add "https://github.com/user/repo.git")
+#+end_src
+
+The repository can be specified as a local path or a remote URL.
+
+*** List repositories
+View the currently tracked repositories with:
+
+#+begin_src elisp
+(sandbox-update-repos-list)
+#+end_src
+
+*** Update repositories
+To fetch the latest changes for all tracked repositories:
+
+#+begin_src elisp
+(sandbox-update-repos-update)
+#+end_src
+
+This will update repositories that have not been refreshed recently, based on cached timestamps.
+
+*** Remove repositories
+To stop tracking a repository:
+
+#+begin_src elisp
+(sandbox-update-repo-remove "/path/to/repo")
+#+end_src
+
+*** Clear all repositories
+To completely clear the list of tracked repositories:
+
+#+begin_src elisp
+(sandbox-update-repos-clear)
+#+end_src
+
+** Customization
+*** Cache directory
+The cache directory stores timestamp files to track when repositories were last updated. The default location is:
+
+#+begin_src elisp
+(customize-option 'sandbox-update-cache-dir)
+#+end_src
+
+*** Sandbox directory
+The sandbox directory is the base location for cloned repository sandboxes. The default is:
+
+#+begin_src elisp
+(customize-option 'sandbox-update-sandbox-dir)
+#+end_src
+
+** Installation
+
+To install the package, place ~sandbox-update.el~ in your Emacs lisp path and require it.
+
+#+begin_src elisp
+  (use-package sandbox-update
+    :straight (:host github :repo "jwalsh/sandbox-update.el" :files ("dist" "*.el"))
+#+end_src
+
+** Development 
+To compile the code:
+
+#+begin_src shell 
+make build
+#+end_src
+
+To run tests:
+
+#+begin_src shell
+make test
+#+end_src
+
+To clean temporary files:
+#+begin_src shell
+make clean 
+#+end_src
+
+** Packaging
+
+To create a package distribution:
+
+- The main code is in ~sandbox-update.el~
+- Package metadata is stored in the ~dist/~ folder:
+  - ~dist/sandbox-update-pkg.el~ contains package headers
+  - ~dist/COPYING~ contains the license file
+    
+To build a distribution tarball:
+
+#+begin_src shell
+make dist
+#+end_src
+
+
+This will:
+
+- Compile the code
+- Copy files to ~dist/~
+- Create ~sandbox-update-VERSION.tar~
+
+The resulting package can be installed via ~package-install-file~.
